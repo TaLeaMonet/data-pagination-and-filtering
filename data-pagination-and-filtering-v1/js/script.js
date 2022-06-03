@@ -18,8 +18,8 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 function showPage(list, page) {
-   const startIndex = (page * data.length) - data.length; 
-   const endIndex = page * data.length;
+   const startIndex = (page * 9) - 9; 
+   const endIndex = page * 9;
    const studentList = document.getElementsByClassName('student-list')[0];
    studentList.innerHTML = ``;
 
@@ -34,7 +34,7 @@ function showPage(list, page) {
        const joinedDetailsDiv = document.createElement('div');
        const dateSpan = document.createElement('span');
          
-      //Implement attributes on elements and append to body of page
+      //Create attributes for elements and append to linkList variable
        li.className = "student-item cf";
        studentDetailsDiv.className = "student-details";
        img.className = "avatar";
@@ -55,14 +55,13 @@ function showPage(list, page) {
    }
   
 }
-showPage(data, 1);
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
-   const paginationButtons = Math.ceil(list.length / 9); 
+   const paginationButtons = list.length / 9;
+   console.log(paginationButtons); 
    const linkList = document.getElementsByClassName("link-list")[0];
    linkList.innerHTML = '';
  //Create elements for pagination buttons and interate over number of buttons needed to be displayed
@@ -74,7 +73,21 @@ function addPagination(list) {
       li.append(button);
       linkList.append(li);
    }
+   linkList.addEventListener("click", (e) => {
+      if( e.target.tagName === 'BUTTON') {
+        document.querySelector('.active').classList.remove('active');
+        e.target.className = "active";
+        const pageNumberClicked = e.target.textContent; 
+        showPage(list, pageNumberClicked);
+      }
+  });
+   let active = document.getElementsByTagName('button')[0];
+   active.className = "active";
+
+  
 }
-addPagination(data);
+
 
 // Call functions
+showPage(data, 1);
+addPagination(data);
