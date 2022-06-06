@@ -18,6 +18,7 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 function showPage(list, page) {
+   //Create start and end index for the number of students to display on each page. 
    const startIndex = (page * 9) - 9; 
    const endIndex = page * 9;
    const studentList = document.getElementsByClassName('student-list')[0];
@@ -53,15 +54,14 @@ function showPage(list, page) {
        joinedDetailsDiv.append(dateSpan); 
       }
    }
-  
 }
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
-   const paginationButtons = list.length / 9;
-   console.log(paginationButtons); 
+//Create variables to store number of pagination buttons needed and the element that will be used to contain the buttons
+   const paginationButtons = Math.ceil(list.length / 9);
    const linkList = document.getElementsByClassName("link-list")[0];
    linkList.innerHTML = '';
  //Create elements for pagination buttons and interate over number of buttons needed to be displayed
@@ -73,6 +73,7 @@ function addPagination(list) {
       li.append(button);
       linkList.append(li);
    }
+  //Event listener targeting each button click 
    linkList.addEventListener("click", (e) => {
       if( e.target.tagName === 'BUTTON') {
         document.querySelector('.active').classList.remove('active');
@@ -81,13 +82,10 @@ function addPagination(list) {
         showPage(list, pageNumberClicked);
       }
   });
+// Create variable place the active class on the first button. 
    let active = document.getElementsByTagName('button')[0];
    active.className = "active";
-
-  
 }
-
-
 // Call functions
 showPage(data, 1);
 addPagination(data);
